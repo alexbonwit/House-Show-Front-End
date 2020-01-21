@@ -8,8 +8,61 @@ function main() {
 
         getEvents()
 
-
     })
+
+}
+
+function getPerformers() {
+    fetch(PERFORMERS_URL)
+        .then(resp => resp.json())
+        .then(performerObjs => renderPerformers(performerObjs))
+}
+
+function renderPerformers(performerObjs) {
+    const cardContainer = document.querySelector('.card-container')
+    let child = cardContainer.lastElementChild
+    while (child) {
+        cardContainer.removeChild(child);
+        child = cardContainer.lastElementChild;
+    }
+
+    performerObjs.forEach(performer => renderPerformer(performer))
+}
+
+function getNeighborhoods() {
+    fetch(NEIGHBORHOODS_URL)
+        .then(resp => resp.json())
+        .then(neighborhoodObjs => renderNeighborhoods(neighborhoodObjs))
+}
+
+function renderNeighborhoods(neighborhoodData) {
+    const cardContainer = document.querySelector('.card-container')
+    let child = cardContainer.lastElementChild
+    while (child) {
+        cardContainer.removeChild(child);
+        child = cardContainer.lastElementChild;
+    }
+
+    neighborhoodData.forEach(neighborhood => renderNeighborhood(neighborhood))
+}
+
+function renderNeighborhood(neighborhoodObj) {
+    const cardContainer = document.querySelector('.card-container')
+
+    const neighborhoodDiv = document.createElement('div')
+
+    const neighborhoodName = document.createElement('h3')
+    neighborhoodName.innerText = neighborhoodObj.name
+
+    const city = document.createElement('p')
+    city.innerText = neighborhoodObj.city
+
+    const county = document.createElement('p')
+    county.innerText = neighborhoodObj.county
+
+    neighborhoodDiv.append(neighborhoodName, city, county)
+
+    cardContainer.append(neighborhoodDiv)
 
 }
 
@@ -23,11 +76,11 @@ function getEvents() {
 function renderEvents(eventData) {
     
     const cardContainer = document.querySelector('.card-container')
-    // let child = cardContainer.lastElementChild
-    // while (child) {
-    //     cardContainer.removeChild(child);
-    //     child = cardContainer.lastElementChild;
-    // } 
+    let child = cardContainer.lastElementChild
+    while (child) {
+        cardContainer.removeChild(child);
+        child = cardContainer.lastElementChild;
+    } 
 
     eventData.forEach(event => renderEvent(event))
 
