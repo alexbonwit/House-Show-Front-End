@@ -6,10 +6,35 @@ const PERFORMERS_URL = `${BASE_URL}/performers`
 function main() {
     document.addEventListener('DOMContentLoaded', () => {
 
+        loadNav()
         getEvents()
 
     })
 
+}
+
+function loadNav() {
+    const nav = document.querySelector('.main-nav')
+
+    const eventsButton = document.createElement('button')
+    eventsButton.innerText = 'Events'
+
+    const performersButton = document.createElement('button')
+    performersButton.innerText = 'Performers'
+
+    const neighborhoodsButton = document.createElement('button')
+    neighborhoodsButton.innerText = 'Neighborhoods'
+
+    nav.append(eventsButton, performersButton, neighborhoodsButton)
+    nav.addEventListener('click', e => {
+        if (e.target === eventsButton) {
+            getEvents()
+        } else if (e.target === performersButton) {
+            getPerformers()
+        } else if (e.target === neighborhoodsButton) {
+            getNeighborhoods()
+        }
+    })
 }
 
 function getPerformers() {
@@ -27,6 +52,18 @@ function renderPerformers(performerObjs) {
     }
 
     performerObjs.forEach(performer => renderPerformer(performer))
+}
+
+function renderPerformer(performer) {
+    const cardContainer = document.querySelector('.card-container')
+
+    const performerDiv = document.createElement('div')
+
+    const performerName = document.createElement('h3')
+    performerName.innerText = performer.name
+
+    performerDiv.append(performerName)
+    cardContainer.append(performerDiv)
 }
 
 function getNeighborhoods() {
