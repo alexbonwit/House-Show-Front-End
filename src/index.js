@@ -1,3 +1,4 @@
+let addEvent = false
 const BASE_URL = 'http://localhost:3000'
 const EVENTS_URL = `${BASE_URL}/events`
 const NEIGHBORHOODS_URL = `${BASE_URL}/neighborhoods`
@@ -5,7 +6,19 @@ const PERFORMERS_URL = `${BASE_URL}/performers`
 
 function main() {
     document.addEventListener('DOMContentLoaded', () => {
-
+        const addBtn = document.querySelector('#new-event-btn')
+        const eventForm = document.querySelector('.form-container')
+        eventForm.style.display = 'none'
+        addBtn.addEventListener('click', () => {
+            // hide & seek with the form
+            addEvent = !addEvent
+            if (addEvent) {
+                eventForm.style.display = 'block'
+            } else if (!addEvent) {
+                eventForm.style.display = 'none'
+            }
+        })
+        
         loadNav()
         getEvents()
 
