@@ -2,13 +2,13 @@ const BASE_URL = 'http://localhost:3000'
 const EVENTS_URL = `${BASE_URL}/events`
 const NEIGHBORHOODS_URL = `${BASE_URL}/neighborhoods`
 const PERFORMERS_URL = `${BASE_URL}/performers`
+const SHOWS_URL = `${BASE_URL}/shows`
 
 function main() {
     document.addEventListener('DOMContentLoaded', () => {
 
         loadNav()
         getEvents()
-
     })
 
 }
@@ -147,12 +147,17 @@ function renderEvent(eventObj) {
     const interestButton = document.createElement('button')
     interestButton.innerText = 'Interested?'
 
+    // renderShows(eventObj)
+
     eventDiv.append(eventName, eventHood, eventAddress, eventTime, currentInterest, interestButton)
 
     cardContainer.append(eventDiv)
 
 }
 
+function renderShows(eventObj) {
+    // debugger
+}
 
 
 
