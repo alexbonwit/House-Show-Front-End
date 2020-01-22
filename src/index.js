@@ -29,24 +29,24 @@ function main() {
 
 function renderForm() {
 
-    const titleDiv = document.querySelector('#form-title')
+    const titleDiv = document.querySelector('[data-event-id="form-title"]')
     const h4 = document.createElement('h4')
     h4.innerText = "Share your House Show!"
     titleDiv.append(h4)
 
-    const nameDiv = document.querySelector('#name-field')
+    const nameDiv = document.querySelector('[data-event-id="name-field"]')
     const name = document.createElement('input')
     name.type = 'text'
     name.placeholder = 'Name your house show...'
     nameDiv.append(name)
 
-    const addressDiv = document.querySelector('#address-field')
+    const addressDiv = document.querySelector('[data-event-id="address-field"]')
     const address = document.createElement('input')
     address.type = 'text'
     address.placeholder = '123 Fake St...'
     addressDiv.append(address)
 
-    const dateTimeDiv = document.querySelector('#date-time-field')
+    const dateTimeDiv = document.querySelector('[data-event-id="date-time-field"]')
     const dateTime = document.createElement('input')
     dateTime.type = 'text'
     dateTime.placeholder = 'October 31st, 10pm-ish...'
@@ -54,9 +54,9 @@ function renderForm() {
 
     listNeighborhoods()
 
-    listPerformers()
+    // listShows()
 
-    const submitDiv = document.querySelector('#submit')
+    const submitDiv = document.querySelector('[data-event-id="submit"]')
     const submit = document.createElement('button')
     submit.innerText = "Submit"
     submitDiv.append(submit)
@@ -64,41 +64,61 @@ function renderForm() {
     const form = document.querySelector('.add-event-form')
     form.addEventListener('submit', e => {
         e.preventDefault()
-
+        
         const newEventData = {
             name: e.target[0].value,
             address: e.target[1].value,
             start_time: e.target[2].value,
-            neighborhood_id: e.target.neighborhood_id.value,
-            
+            neighborhood_id: parseInt(e.target[3].value),
+            interested_count: 0
         }
+
+        newEvent(newEventData)
+        form.reset()
 
     })
 }
 
-function listPerformers() {
-    fetch(PERFORMERS_URL)
+function newEvent(eventData) {
+
+    const reqObj = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(eventData)
+    }
+
+    fetch(EVENTS_URL, reqObj)
         .then(resp => resp.json())
-        .then(performers => {
-            const performerDiv = document.querySelector('#performer-select')
-            const player = document.createElement('select')
-            performers.forEach(performer => {
-                let performerOption = document.createElement('option')
-                performerOption.innerText = performer.name
-                player.append(performerOption)
-            })
-            performerDiv.append(player)
-        })
+        .then(eventObj => renderEvent(eventObj))
 }
+
+// function listShows() {
+//     fetch(SHOWS_URL)
+//         .then(resp => resp.json())
+//         .then(shows => {
+//             const showDiv = document.querySelector('[data-event-id="show-select"]')
+//             const artist = document.createElement('select')
+//             shows.forEach(artist => {
+//                 let showOption = document.createElement('option')
+//                 showOption.innerText = show.name
+//                 artist.append(showOption)
+//             })
+//             showDiv.append(artist)
+//         })
+// }
 
 function listNeighborhoods() {
     fetch(NEIGHBORHOODS_URL)
         .then(resp => resp.json())
         .then(neighborhoods => {
-            const neighborhoodDiv = document.querySelector('#neighborhood-select')
+            const neighborhoodDiv = document.querySelector('[data-event-id="neighborhood-select"]')
             const location = document.createElement('select')
             neighborhoods.forEach(neighborhood => {
                 let neighborOption = document.createElement('option')
+                neighborOption.value = neighborhood.id
                 neighborOption.innerText = neighborhood.name
                 location.append(neighborOption)
             })
