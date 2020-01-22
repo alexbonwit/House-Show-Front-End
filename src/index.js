@@ -237,12 +237,15 @@ function renderEvent(eventObj) {
 
     const h4 = document.createElement('h4')
     h4.innerText = 'Line up:'
+    h4.className = 'lineUp'
 
     eventDiv.append(h4)
 
     eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, currentInterest, interestButton)
 
     cardContainer.append(eventDiv)
+
+    renderNewShowFrom(eventDiv, eventObjId)
 
 }
 
@@ -257,8 +260,9 @@ function renderShows(showObjs) {
 }
 
 function renderShow(showObj) {
-    const eventDiv = document.querySelector(`[data-event-id='${showObj.event_id}']`)
-    const pTag = eventDiv.querySelector('.event-interest')
+    const eventId = showObj.event_id
+    const eventDiv = document.querySelector(`[data-event-id='${eventId}']`)
+    const lineUp = eventDiv.querySelector('h4.lineUp')
     
     const showDiv = document.createElement('div')
     showDiv.setAttribute("data-show-id", showObj.id)
@@ -271,12 +275,25 @@ function renderShow(showObj) {
     
     showDiv.append(showH4, performerH5)
     
-    pTag.parentNode.insertBefore(showDiv, pTag)
+    lineUp.parentNode.insertBefore(showDiv, lineUp.nextElementSibling)
 }
 
-function renderNewShowFrom() {
 
+function renderNewShowFrom(eventDiv, eventId) {
+    // debugger
+    const pTag = eventDiv.querySelector('.event-interest')
+    
+    const newShowForm = document.createElement('form')
+    newShowForm.className = 'new-show-form'
+
+    const nameLabel = document.createElement('label')
+    nameLabel.innerText = 'Show name: '
+    const nameInput = document.createElement('input')
+    nameInput.placeholder = 'Type your show name here ...'
+
+    newShowForm.append(nameLabel, nameInput)
+
+    pTag.parentNode.insertBefore(newShowForm, pTag)
 }
-
 
 main()
