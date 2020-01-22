@@ -211,7 +211,7 @@ function renderEvent(eventObj) {
     const cardContainer = document.querySelector('.card-container')
 
     const eventDiv = document.createElement('div')
-    eventDiv.id = `event-${eventObj.id}`
+    eventDiv.setAttribute("data-event-id", eventObj.id)
     
     const eventName = document.createElement('h3')
     eventName.innerText = eventObj.name
@@ -257,11 +257,11 @@ function renderShows(showObjs) {
 }
 
 function renderShow(showObj) {
-    const eventDiv = document.querySelector(`div#event-${showObj.event_id}`)
+    const eventDiv = document.querySelector(`[data-event-id='${showObj.event_id}']`)
     const pTag = eventDiv.querySelector('.event-interest')
     
     const showDiv = document.createElement('div')
-    showDiv.id = showObj.id
+    showDiv.setAttribute("data-show-id", showObj.id)
     
     const showH4 = document.createElement('h4')
     showH4.innerText = showObj.name
@@ -274,7 +274,9 @@ function renderShow(showObj) {
     pTag.parentNode.insertBefore(showDiv, pTag)
 }
 
+function renderNewShowFrom() {
 
+}
 
 
 main()
