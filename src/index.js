@@ -22,29 +22,99 @@ function main() {
         
         loadNav()
         getEvents()
+        renderForm()
     })
 
+}
+
+function renderForm() {
+
+    const titleDiv = document.querySelector('#form-title')
+    const h4 = document.createElement('h4')
+    h4.innerText = "Share your House Show!"
+    titleDiv.append(h4)
+
+    const nameDiv = document.querySelector('#name-field')
+    const name = document.createElement('input')
+    name.type = 'text'
+    name.placeholder = 'Name your house show...'
+    nameDiv.append(name)
+
+    const addressDiv = document.querySelector('#address-field')
+    const address = document.createElement('input')
+    address.type = 'text'
+    address.placeholder = '123 Fake St...'
+    addressDiv.append(address)
+
+    const dateTimeDiv = document.querySelector('#date-time-field')
+    const dateTime = document.createElement('input')
+    dateTime.type = 'text'
+    dateTime.placeholder = 'October 31st, 10pm-ish...'
+    dateTimeDiv.append(dateTime)
+
+    listNeighborhoods()
+
+    listPerformers()
+
+    const submitDiv = document.querySelector('#submit')
+    const submit = document.createElement('button')
+    submit.innerText = "Submit"
+    submitDiv.append(submit)
+
+    const form = document.querySelector('.add-event-form')
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const newEventData = {
+            name: e.target[0].value,
+            address: e.target[1].value,
+            start_time: e.target[2].value,
+            neighborhood_id: e.target.neighborhood_id.value,
+            
+        }
+
+    })
+}
+
+function listPerformers() {
+    fetch(PERFORMERS_URL)
+        .then(resp => resp.json())
+        .then(performers => {
+            const performerDiv = document.querySelector('#performer-select')
+            const player = document.createElement('select')
+            performers.forEach(performer => {
+                let performerOption = document.createElement('option')
+                performerOption.innerText = performer.name
+                player.append(performerOption)
+            })
+            performerDiv.append(player)
+        })
+}
+
+function listNeighborhoods() {
+    fetch(NEIGHBORHOODS_URL)
+        .then(resp => resp.json())
+        .then(neighborhoods => {
+            const neighborhoodDiv = document.querySelector('#neighborhood-select')
+            const location = document.createElement('select')
+            neighborhoods.forEach(neighborhood => {
+                let neighborOption = document.createElement('option')
+                neighborOption.innerText = neighborhood.name
+                location.append(neighborOption)
+            })
+            neighborhoodDiv.append(location)
+        })
 }
 
 function loadNav() {
     const nav = document.querySelector('.main-nav')
 
-    const eventsButton = document.createElement('button')
-    eventsButton.innerText = 'Events'
-
-    const performersButton = document.createElement('button')
-    performersButton.innerText = 'Performers'
-
-    const neighborhoodsButton = document.createElement('button')
-    neighborhoodsButton.innerText = 'Neighborhoods'
-
-    nav.append(eventsButton, performersButton, neighborhoodsButton)
     nav.addEventListener('click', e => {
-        if (e.target === eventsButton) {
+        if (e.target.innerText === "Events") {
             getEvents()
-        } else if (e.target === performersButton) {
+        } else if (e.target.innerText === "Performers") {
             getPerformers()
-        } else if (e.target === neighborhoodsButton) {
+        } else if (e.target.innerText === "Neighborhoods") {
             getNeighborhoods()
         }
     })
