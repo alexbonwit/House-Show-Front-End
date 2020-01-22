@@ -245,8 +245,7 @@ function renderEvent(eventObj) {
 
     cardContainer.append(eventDiv)
 
-    renderNewShowFrom(eventDiv, eventObjId)
-
+    renderNewShowFrom(eventDiv)
 }
 
 function getShows(eventObjId) {
@@ -279,21 +278,43 @@ function renderShow(showObj) {
 }
 
 
-function renderNewShowFrom(eventDiv, eventId) {
+function renderNewShowFrom(eventDiv) {
     // debugger
     const pTag = eventDiv.querySelector('.event-interest')
     
     const newShowForm = document.createElement('form')
     newShowForm.className = 'new-show-form'
+    newShowForm.style.display = 'none'
 
     const nameLabel = document.createElement('label')
     nameLabel.innerText = 'Show name: '
     const nameInput = document.createElement('input')
-    nameInput.placeholder = 'Type your show name here ...'
+    nameInput.type = 'text'
 
-    newShowForm.append(nameLabel, nameInput)
+    nameInput.placeholder = 'Type your show name here ...'
+    const submitBtn = document.createElement('input')
+    submitBtn.type = 'submit'
+
+    const showFormBtn = document.createElement('button')
+    showFormBtn.innerText = 'Click here to add a show to this event'
+    showFormBtn.addEventListener('click', displayNewShowForm)
+
+    newShowForm.append(nameLabel, nameInput, submitBtn)
 
     pTag.parentNode.insertBefore(newShowForm, pTag)
+    newShowForm.parentNode.insertBefore(showFormBtn, newShowForm.nextElementSibling)
+}
+
+function displayNewShowForm () {
+    // debugger
+
+    this.previousElementSibling.style.display
+
+    if (this.previousElementSibling.style.display === 'none') {
+            this.previousElementSibling.style.display = 'block'
+    } else if (    this.previousElementSibling.style.display === 'block'){
+            this.previousElementSibling.style.display = 'none'
+    }
 }
 
 main()
