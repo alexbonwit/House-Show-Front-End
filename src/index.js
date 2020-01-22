@@ -187,7 +187,6 @@ function renderShows(showObjs) {
 }
 
 function renderShow(showObj) {
-    
     const eventDiv = document.querySelector(`div#event-${showObj.event_id}`)
     const pTag = eventDiv.querySelector('.event-interest')
     
@@ -195,7 +194,7 @@ function renderShow(showObj) {
     showDiv.id = showObj.id
     
     const showH4 = document.createElement('h4')
-    showH4.innerText = showObj.created_at
+    showH4.innerText = showObj.name
     
     const performerH5 = document.createElement('h5')
     performerH5.innerText = showObj.performer.name
@@ -203,7 +202,6 @@ function renderShow(showObj) {
     showDiv.append(showH4, performerH5)
     
     pTag.parentNode.insertBefore(showDiv, pTag)
-    // debugger
 }
 
 
