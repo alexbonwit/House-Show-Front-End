@@ -19,19 +19,28 @@
             <h1>House Show /\</h1>
         </header>
         <nav class = "main-nav">
+            <button>Events</button>
+            <button>Performers</button>
+            <button>Neighborhoods</button>
         </nav>
         <br />
         <button id="new-event-btn">+ New House Show</button>
         <br />
         <div class="form-container">
             <form class="add-event-form">
-                <h4>Share your House Show!</h4>
-        
-                <input type="text" name="name" value="" placeholder="Enter your show's name..." class="input-text" />
-                <br />
-                <select name="" id="neighborhoods"></select>
-                <br />
-                <input type="submit" name="submit" value="Create New House Show" class="submit" />
+                <div id="form-title"></div>
+                <label>House Show:</label>
+                <div id="name-field"></div>
+                <label>Where?</label>
+                <div id="address-field"></div>
+                <label>When?</label>
+                <div id="date-time-field"></div>
+                <label>Neighborhood?</label>
+                <div id="neighborhood-select"></div>
+                <label>Who's playing?</label>
+                <div id="performer-select"></div>
+                <br>
+                <div id="submit"></div>
             </form>
         </div>
         <div class = "card-container">
