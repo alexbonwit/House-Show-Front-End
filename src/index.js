@@ -141,6 +141,7 @@ function renderEvent(eventObj) {
     const cardContainer = document.querySelector('.card-container')
 
     const eventDiv = document.createElement('div')
+    eventDiv.id = `event-${eventObj.id}`
     
     const eventName = document.createElement('h3')
     eventName.innerText = eventObj.name
@@ -155,21 +156,52 @@ function renderEvent(eventObj) {
     eventTime.innerText = eventObj.start_time
 
     const currentInterest = document.createElement('p')
+    currentInterest.className = `event-interest`
     currentInterest.innerText = `${eventObj.interested_count} People Interested`
 
     const interestButton = document.createElement('button')
     interestButton.innerText = 'Interested?'
 
-    // renderShows(eventObj)
+    const eventObjId = eventObj.id
+    getShows(eventObjId)
 
-    eventDiv.append(eventName, eventHood, eventAddress, eventTime, currentInterest, interestButton)
+    const h4 = document.createElement('h4')
+    h4.innerText = 'Line up:'
+
+    eventDiv.append(h4)
+
+    eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, currentInterest, interestButton)
 
     cardContainer.append(eventDiv)
 
 }
 
-function renderShows(eventObj) {
-    // debugger
+function getShows(eventObjId) {
+    fetch(EVENTS_URL+'/'+eventObjId)
+        .then(resp => resp.json())
+        .then(showObjs => renderShows(showObjs))
+}
+
+function renderShows(showObjs) {
+    showObjs.forEach(showObj => renderShow(showObj))
+}
+
+function renderShow(showObj) {
+    const eventDiv = document.querySelector(`div#event-${showObj.event_id}`)
+    const pTag = eventDiv.querySelector('.event-interest')
+    
+    const showDiv = document.createElement('div')
+    showDiv.id = showObj.id
+    
+    const showH4 = document.createElement('h4')
+    showH4.innerText = showObj.name
+    
+    const performerH5 = document.createElement('h5')
+    performerH5.innerText = showObj.performer.name
+    
+    showDiv.append(showH4, performerH5)
+    
+    pTag.parentNode.insertBefore(showDiv, pTag)
 }
 
 
