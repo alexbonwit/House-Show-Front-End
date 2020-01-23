@@ -222,8 +222,16 @@ function renderEvent(eventObj) {
     eventDiv.className = "card"
     eventDiv.setAttribute("data-event-id", eventObj.id)
     
+    const nameDiv = document.createElement('div')
+    nameDiv.className = 'div1'
+
     const eventName = document.createElement('h3')
     eventName.innerText = eventObj.name
+
+    nameDiv.append(eventName)
+
+    const infoDiv = document.createElement('div')
+    infoDiv.className = 'div2'
 
     const eventHood = document.createElement('h4')
     eventHood.innerText = eventObj.neighborhood.name
@@ -234,6 +242,11 @@ function renderEvent(eventObj) {
     const eventTime = document.createElement('p')
     eventTime.innerText = eventObj.start_time
 
+    infoDiv.append(eventHood, eventAddress, eventTime)
+
+    const interestDiv = document.createElement('div')
+    interestDiv.className = 'div5'
+
     const currentInterest = document.createElement('p')
     currentInterest.className = `event-interest`
     currentInterest.innerText = `${eventObj.interested_count} People Interested`
@@ -243,27 +256,32 @@ function renderEvent(eventObj) {
     interestButton.className = "btn btn-default"
     interestButton.addEventListener('click', handleInterest)
 
+    interestDiv.append(currentInterest, interestButton)
+
     const eventObjId = eventObj.id
     getShows(eventObjId)
+
+    const lineUpDiv = document.createElement('div')
+    lineUpDiv.className = 'div3'
 
     const h4 = document.createElement('h4')
     h4.innerText = 'Line up:'
     h4.className = 'lineUp'
 
+    lineUpDiv.append(h4)
+
+    const newShowDiv = document.createElement('div')
+    newShowDiv.className = 'div4'
+
+    
     const showFormBtn = document.createElement('button')
+    showFormBtn.className = 'show-form'
     showFormBtn.innerText = 'Click here to add a show to this event'
     showFormBtn.addEventListener('click', function () {
         // check if the previous element is a form
         // if not, create it and attach it as a previous sibling
         // if yes, check if it is being displayed or not and then hide/show it
-        if (this.previousElementSibling.tagName === 'FORM') {
-            if (this.previousElementSibling.style.display === 'none') {
-                    this.previousElementSibling.style.display = 'block'
-            } else if (this.previousElementSibling.style.display === 'block'){
-                    this.previousElementSibling.style.display = 'none'
-            } 
-        } else {    
-
+        if (this.previousElementSibling === null) {
             const nameLabel = document.createElement('label')
             nameLabel.innerText = 'Show name: '
             const nameInput = document.createElement('input')
@@ -279,15 +297,22 @@ function renderEvent(eventObj) {
                     form.style.display = 'block'
 
                     form.append(nameLabel, nameInput, selectNode, submitBtn)
-
+            
                     this.parentNode.insertBefore(form, this)
 
                     form.addEventListener('submit', postNewShowForm)
                 })   
-        }
+        } else 
+            if (this.previousElementSibling.style.display === 'none') {
+                    this.previousElementSibling.style.display = 'block'
+            } else if (this.previousElementSibling.style.display === 'block'){
+                    this.previousElementSibling.style.display = 'none'
+            } 
     })
 
-    eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, showFormBtn, currentInterest, interestButton)
+    newShowDiv.append(showFormBtn)
+
+    eventDiv.append(nameDiv, infoDiv, lineUpDiv, newShowDiv, interestDiv)
 
     cardContainer.append(eventDiv)
 }
@@ -295,6 +320,8 @@ function renderEvent(eventObj) {
 function handleInterest(event) {
     const interest = event.target.previousElementSibling
     const newInterest = parseInt(interest.innerText) + 1
+
+    debugger
 
     const interestObj = {
         method: "PATCH",
@@ -305,7 +332,7 @@ function handleInterest(event) {
         body: JSON.stringify({"interested_count": newInterest})
     }
 
-    fetch(`${EVENTS_URL}/${event.target.parentElement.dataset.eventId}`, interestObj)
+    fetch(`${EVENTS_URL}/${event.target.parentNode.parentNode.dataset.eventId}`, interestObj)
         .then(resp => resp.json())
         .then(interstObj => {interest.innerText = `${newInterest} People Interested`})
 }
@@ -363,7 +390,7 @@ function postNewShowForm (e) {
     e.preventDefault()
 
     const newShowObj = {
-        event_id: parseInt(e.target.parentNode.dataset.eventId),
+        event_id: parseInt(e.target.parentNode.parentNode.dataset.eventId),
         performer_id: parseInt(e.target[1].value),
         name: e.target[0].value
     }
