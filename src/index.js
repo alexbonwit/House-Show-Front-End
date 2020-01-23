@@ -251,6 +251,7 @@ function renderEvent(eventObj) {
 
     const interestButton = document.createElement('button')
     interestButton.innerText = 'Interested?'
+    interestButton.addEventListener('click', handleInterest)
 
     const eventObjId = eventObj.id
     getShows(eventObjId)
@@ -264,6 +265,24 @@ function renderEvent(eventObj) {
 
     cardContainer.append(eventDiv)
 
+}
+
+function handleInterest(event) {
+    const interest = event.target.previousElementSibling
+    const newInterest = parseInt(interest.innerText) + 1
+
+    const interestObj = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({"interested_count": newInterest})
+    }
+
+    fetch(`${EVENTS_URL}/${event.target.parentElement.id}`, interestObj)
+        .then(resp => resp.json())
+        .then(interstObj => {interest.innerText = `${newInterest} People Interested`})
 }
 
 function getShows(eventObjId) {
