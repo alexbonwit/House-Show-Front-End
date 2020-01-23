@@ -95,21 +95,6 @@ function newEvent(eventData) {
         .then(eventObj => renderEvent(eventObj))
 }
 
-// function listShows() {
-//     fetch(SHOWS_URL)
-//         .then(resp => resp.json())
-//         .then(shows => {
-//             const showDiv = document.querySelector('[data-event-id="show-select"]')
-//             const artist = document.createElement('select')
-//             shows.forEach(artist => {
-//                 let showOption = document.createElement('option')
-//                 showOption.innerText = show.name
-//                 artist.append(showOption)
-//             })
-//             showDiv.append(artist)
-//         })
-// }
-
 function listNeighborhoods() {
     fetch(NEIGHBORHOODS_URL)
         .then(resp => resp.json())
@@ -293,10 +278,7 @@ function renderEvent(eventObj) {
                     this.parentNode.insertBefore(form, this)
 
                     form.addEventListener('submit', postNewShowForm)
-                })
-            
-            
-            
+                })   
         }
     })
 
