@@ -270,11 +270,12 @@ function renderEvent(eventObj) {
                     form.append(nameLabel, nameInput, selectNode, submitBtn)
 
                     this.parentNode.insertBefore(form, this)
-            })
-            
-            
-            
 
+                    form.addEventListener('submit', postNewShowForm)
+                })
+            
+            
+            
         }
     })
 
@@ -330,6 +331,10 @@ function listPerformers() {
             })
             return selectNode
     })
+}
+
+function postNewShowForm () {
+    debugger
 }
 
 main()
