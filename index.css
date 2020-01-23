@@ -2,11 +2,27 @@
   display: flex;
   justify-content: left;
   color: darkgray;
-  background: rgb(31, 31, 31);
+  text-shadow: 2px 2px 4px #000000;
+  /* background: rgb(31, 31, 31); */
+  background: rgb(2,0,36);
+  background: radial-gradient(at bottom left, rgba(2,0,36,1) 0%, rgba(79,125,165,1) 90%, rgba(17,23,27,1) 100%);
   opacity: .8;
   height: 8rem;
   padding: 1rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
+}
+
+#new-event-background {
+    background: gray;
+    padding: 2rem
+}
+
+.performer {
+    color: darkgray;
+}
+
+.neighborhood {
+    color: darkgray;
 }
 
 .card {
@@ -29,6 +45,28 @@
     background: rgb(31, 31, 31);
     opacity: .8;
     padding: 1rem;
+}
+
+.footer {
+    border-top: 1px solid rgb(31, 31, 31);
+    text-align: right;
+    background: darkgray;
+    padding-bottom: .5rem;
+}
+
+.main-nav {
+    background: darkgray;
+    padding: .5rem;
+}
+
+.card-container {
+    /* background: rgb(71, 109, 192) */
+    /* background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(79,125,165,1) 54%, rgba(17,23,27,1) 100%); */
+    /* background: rgb(12,11,33);
+    background: radial-gradient(at bottom, rgba(12,11,33,1) 0%, rgba(79,125,165,1) 54%, rgba(17,23,27,1) 100%);     */
+    background: rgb(12,11,33);
+    background: linear-gradient(0deg, rgb(25, 26, 39) 0%, rgb(67, 85, 124) 100%);   
 }
 
 input[type=text] {

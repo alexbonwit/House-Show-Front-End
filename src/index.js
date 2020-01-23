@@ -113,7 +113,7 @@ function listNeighborhoods() {
 }
 
 function loadNav() {
-    const nav = document.querySelector('.main-nav')
+    const nav = document.querySelector('.btn-group')
 
     nav.addEventListener('click', e => {
         if (e.target.innerText === "Events") {
@@ -150,6 +150,7 @@ function renderPerformer(performer) {
 
     const performerName = document.createElement('h3')
     performerName.innerText = performer.name
+    performerName.className = "performer"
 
     performerDiv.append(performerName)
     cardContainer.append(performerDiv)
@@ -176,6 +177,7 @@ function renderNeighborhood(neighborhoodObj) {
     const cardContainer = document.querySelector('.card-container')
 
     const neighborhoodDiv = document.createElement('div')
+    neighborhoodDiv.className = "neighborhood"
 
     const neighborhoodName = document.createElement('h3')
     neighborhoodName.innerText = neighborhoodObj.name

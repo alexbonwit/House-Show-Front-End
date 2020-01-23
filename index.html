@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>House Show /\</title>
+        <title>House Show &#8962;</title>
         <script src="src/index.js"></script>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="index.css">
@@ -17,16 +17,20 @@
 
     <body>
         <header id="show-header">      
-            <h1>House Show /\</h1>
+            <h1>House Show &#8962;</h1>
         </header>
-        <nav class = "main-nav">
-            <button class="btn btn-default">Events</button>
-            <button class="btn btn-default">Performers</button>
-            <button class="btn btn-default">Neighborhoods</button>
-        </nav>
-        <br />
+        <div class = "main-nav">
+            <nav class = "btn-group">
+                <button class="btn btn-default">Events</button>
+                <button class="btn btn-default">Performers</button>
+                <button class="btn btn-default">Neighborhoods</button>
+            </nav>
+        </div>
+        <!-- <br /> -->
+        <div id="new-event-background">
         <button id="new-event-btn" class="btn btn-default">+ New House Show</button>
-        <br />
+        </div>
+        <!-- <br /> -->
         <div class="form-container">
             <form class="add-event-form">
                 <div data-event-id="form-title"></div>
@@ -46,5 +50,10 @@
 
         </div>
     </body>
+    <footer class="footer">
+        <p>Made with Love by Lluis and Alex
+            <span class="glyphicon glyphicon-heart-empty"></span>
+        </p>
+    </footer>
 
 </html>
