@@ -239,13 +239,43 @@ function renderEvent(eventObj) {
     h4.innerText = 'Line up:'
     h4.className = 'lineUp'
 
-    eventDiv.append(h4)
+    const showFormBtn = document.createElement('button')
+    showFormBtn.innerText = 'Click here to add a show to this event'
+    showFormBtn.addEventListener('click', function () {
+        if (this.previousElementSibling.tagName === 'form') {
+            if (this.previousElementSibling.style.display === 'none') {
+                    this.previousElementSibling.style.display = 'block'
+            } else if (    this.previousElementSibling.style.display === 'block'){
+                    this.previousElementSibling.style.display = 'none'
+            } 
+        } else {    
+            const newShowForm = document.createElement('form')
+            newShowForm.className = 'new-show-form'
 
-    eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, currentInterest, interestButton)
+            const nameLabel = document.createElement('label')
+            nameLabel.innerText = 'Show name: '
+            const nameInput = document.createElement('input')
+            nameInput.type = 'text'
+            nameInput.placeholder = 'Type your show name here ...'
+            const submitBtn = document.createElement('input')
+            submitBtn.type = 'submit'
+
+            // DO THIS AT HOME: 
+            // fetch performers in different function
+            // return a select tag with all the options in it
+            // append to newshowform
+
+            newShowForm.append(nameLabel, nameInput, submitBtn)
+
+            this.parentNode.insertBefore(newShowForm, this)
+
+
+        }
+    })
+
+    eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, showFormBtn, currentInterest, interestButton)
 
     cardContainer.append(eventDiv)
-
-    renderNewShowFrom(eventDiv)
 }
 
 function getShows(eventObjId) {
@@ -279,42 +309,29 @@ function renderShow(showObj) {
 
 
 function renderNewShowFrom(eventDiv) {
-    // debugger
-    const pTag = eventDiv.querySelector('.event-interest')
+    debugger
     
-    const newShowForm = document.createElement('form')
-    newShowForm.className = 'new-show-form'
-    newShowForm.style.display = 'none'
-
-    const nameLabel = document.createElement('label')
-    nameLabel.innerText = 'Show name: '
-    const nameInput = document.createElement('input')
-    nameInput.type = 'text'
-
-    nameInput.placeholder = 'Type your show name here ...'
-    const submitBtn = document.createElement('input')
-    submitBtn.type = 'submit'
-
-    const showFormBtn = document.createElement('button')
-    showFormBtn.innerText = 'Click here to add a show to this event'
-    showFormBtn.addEventListener('click', displayNewShowForm)
-
-    newShowForm.append(nameLabel, nameInput, submitBtn)
-
-    pTag.parentNode.insertBefore(newShowForm, pTag)
-    newShowForm.parentNode.insertBefore(showFormBtn, newShowForm.nextElementSibling)
 }
 
-function displayNewShowForm () {
-    // debugger
-
-    this.previousElementSibling.style.display
-
-    if (this.previousElementSibling.style.display === 'none') {
-            this.previousElementSibling.style.display = 'block'
-    } else if (    this.previousElementSibling.style.display === 'block'){
-            this.previousElementSibling.style.display = 'none'
-    }
+function listPerformers() {
+    fetch(PERFORMERS_URL)
+        .then(resp => resp.json())
+        .then(performers => {
+            const newShowForms = document.querySelectorAll('.new-show-form')
+            // debugger
+            newShowForms.forEach((newShowForm) => {
+                const selectTag = document.createElement('select')
+                // debugger
+                performers.forEach(performer => {
+                    let performerOption = document.createElement('option')
+                    performerOption.innerText = performer.name
+                    performerOption.value = performer.id
+                    selectTag.append(performerOption)
+                })
+            // debugger
+            newShowForm.append(selectTag)
+            })
+        })
 }
 
 main()
