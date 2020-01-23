@@ -333,8 +333,27 @@ function listPerformers() {
     })
 }
 
-function postNewShowForm () {
-    debugger
+function postNewShowForm (e) {
+    e.preventDefault()
+
+    const newShowObj = {
+        event_id: parseInt(e.target.parentNode.dataset.eventId),
+        performer_id: parseInt(e.target[1].value),
+        name: e.target[0].value
+    }
+    
+    const reqObj = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(newShowObj)
+    }
+
+    fetch(SHOWS_URL, reqObj)
+        .then(resp => resp.json())
+        .then(show => renderShow(show))
 }
 
 main()
