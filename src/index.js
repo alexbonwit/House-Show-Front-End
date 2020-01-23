@@ -95,21 +95,6 @@ function newEvent(eventData) {
         .then(eventObj => renderEvent(eventObj))
 }
 
-// function listShows() {
-//     fetch(SHOWS_URL)
-//         .then(resp => resp.json())
-//         .then(shows => {
-//             const showDiv = document.querySelector('[data-event-id="show-select"]')
-//             const artist = document.createElement('select')
-//             shows.forEach(artist => {
-//                 let showOption = document.createElement('option')
-//                 showOption.innerText = show.name
-//                 artist.append(showOption)
-//             })
-//             showDiv.append(artist)
-//         })
-// }
-
 function listNeighborhoods() {
     fetch(NEIGHBORHOODS_URL)
         .then(resp => resp.json())
@@ -231,7 +216,7 @@ function renderEvent(eventObj) {
     const cardContainer = document.querySelector('.card-container')
 
     const eventDiv = document.createElement('div')
-    eventDiv.id = `event-${eventObj.id}`
+    eventDiv.setAttribute("data-event-id", eventObj.id)
     
     const eventName = document.createElement('h3')
     eventName.innerText = eventObj.name
@@ -258,13 +243,48 @@ function renderEvent(eventObj) {
 
     const h4 = document.createElement('h4')
     h4.innerText = 'Line up:'
+    h4.className = 'lineUp'
 
-    eventDiv.append(h4)
+    const showFormBtn = document.createElement('button')
+    showFormBtn.innerText = 'Click here to add a show to this event'
+    showFormBtn.addEventListener('click', function () {
+        // check if the previous element is a form
+        // if not, create it and attach it as a previous sibling
+        // if yes, check if it is being displayed or not and then hide/show it
+        if (this.previousElementSibling.tagName === 'FORM') {
+            if (this.previousElementSibling.style.display === 'none') {
+                    this.previousElementSibling.style.display = 'block'
+            } else if (this.previousElementSibling.style.display === 'block'){
+                    this.previousElementSibling.style.display = 'none'
+            } 
+        } else {    
 
-    eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, currentInterest, interestButton)
+            const nameLabel = document.createElement('label')
+            nameLabel.innerText = 'Show name: '
+            const nameInput = document.createElement('input')
+            nameInput.type = 'text'
+            nameInput.placeholder = 'Type your show name here ...'
+            const submitBtn = document.createElement('input')
+            submitBtn.type = 'submit'
+
+            listPerformers()
+                .then((selectNode)=>{
+                    const form = document.createElement('form')
+                    form.className = 'new-show-form'
+                    form.style.display = 'block'
+
+                    form.append(nameLabel, nameInput, selectNode, submitBtn)
+
+                    this.parentNode.insertBefore(form, this)
+
+                    form.addEventListener('submit', postNewShowForm)
+                })   
+        }
+    })
+
+    eventDiv.append(eventName, eventHood, eventAddress, eventTime, h4, showFormBtn, currentInterest, interestButton)
 
     cardContainer.append(eventDiv)
-
 }
 
 function handleInterest(event) {
@@ -296,11 +316,12 @@ function renderShows(showObjs) {
 }
 
 function renderShow(showObj) {
-    const eventDiv = document.querySelector(`div#event-${showObj.event_id}`)
-    const pTag = eventDiv.querySelector('.event-interest')
+    const eventId = showObj.event_id
+    const eventDiv = document.querySelector(`[data-event-id='${eventId}']`)
+    const lineUp = eventDiv.querySelector('h4.lineUp')
     
     const showDiv = document.createElement('div')
-    showDiv.id = showObj.id
+    showDiv.setAttribute("data-show-id", showObj.id)
     
     const showH4 = document.createElement('h4')
     showH4.innerText = showObj.name
@@ -310,10 +331,50 @@ function renderShow(showObj) {
     
     showDiv.append(showH4, performerH5)
     
-    pTag.parentNode.insertBefore(showDiv, pTag)
+    lineUp.parentNode.insertBefore(showDiv, lineUp.nextElementSibling)
 }
 
+function listPerformers() {
+    return fetch(PERFORMERS_URL)
+        .then(resp => resp.json())
+        .then(performers => {
+            
+            let options = performers.map(function(performer){
+                return {label: performer.name, value: performer.id}
+            })
 
+            let selectNode = document.createElement('select')
+            options.forEach(option => {
+                let optionNode = document.createElement('option')
+                optionNode.label = option.label
+                optionNode.value = option.value
+                selectNode.append(optionNode)
+            })
+            return selectNode
+    })
+}
 
+function postNewShowForm (e) {
+    e.preventDefault()
+
+    const newShowObj = {
+        event_id: parseInt(e.target.parentNode.dataset.eventId),
+        performer_id: parseInt(e.target[1].value),
+        name: e.target[0].value
+    }
+    
+    const reqObj = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(newShowObj)
+    }
+
+    fetch(SHOWS_URL, reqObj)
+        .then(resp => resp.json())
+        .then(show => renderShow(show))
+}
 
 main()
