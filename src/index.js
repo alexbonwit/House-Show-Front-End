@@ -59,6 +59,7 @@ function renderForm() {
     const submitDiv = document.querySelector('[data-event-id="submit"]')
     const submit = document.createElement('button')
     submit.innerText = "Submit"
+    submit.className = "btn btn-default"
     submitDiv.append(submit)
 
     const form = document.querySelector('.add-event-form')
@@ -231,6 +232,7 @@ function renderEvent(eventObj) {
     const cardContainer = document.querySelector('.card-container')
 
     const eventDiv = document.createElement('div')
+    eventDiv.className = "card"
     eventDiv.id = `event-${eventObj.id}`
     
     const eventName = document.createElement('h3')
@@ -251,6 +253,7 @@ function renderEvent(eventObj) {
 
     const interestButton = document.createElement('button')
     interestButton.innerText = 'Interested?'
+    interestButton.className = "btn btn-default"
     interestButton.addEventListener('click', handleInterest)
 
     const eventObjId = eventObj.id
