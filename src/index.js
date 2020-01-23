@@ -242,15 +242,16 @@ function renderEvent(eventObj) {
     const showFormBtn = document.createElement('button')
     showFormBtn.innerText = 'Click here to add a show to this event'
     showFormBtn.addEventListener('click', function () {
-        if (this.previousElementSibling.tagName === 'form') {
+        // check if the previous element is a form
+        // if not, create it and attach it as a previous sibling
+        // if yes, check if it is being displayed or not and then hide/show it
+        if (this.previousElementSibling.tagName === 'FORM') {
             if (this.previousElementSibling.style.display === 'none') {
                     this.previousElementSibling.style.display = 'block'
-            } else if (    this.previousElementSibling.style.display === 'block'){
+            } else if (this.previousElementSibling.style.display === 'block'){
                     this.previousElementSibling.style.display = 'none'
             } 
         } else {    
-            const newShowForm = document.createElement('form')
-            newShowForm.className = 'new-show-form'
 
             const nameLabel = document.createElement('label')
             nameLabel.innerText = 'Show name: '
@@ -260,15 +261,19 @@ function renderEvent(eventObj) {
             const submitBtn = document.createElement('input')
             submitBtn.type = 'submit'
 
-            // DO THIS AT HOME: 
-            // fetch performers in different function
-            // return a select tag with all the options in it
-            // append to newshowform
+            listPerformers()
+                .then((selectNode)=>{
+                    const form = document.createElement('form')
+                    form.className = 'new-show-form'
+                    form.style.display = 'block'
 
-            newShowForm.append(nameLabel, nameInput, submitBtn)
+                    form.append(nameLabel, nameInput, selectNode, submitBtn)
 
-            this.parentNode.insertBefore(newShowForm, this)
-
+                    this.parentNode.insertBefore(form, this)
+            })
+            
+            
+            
 
         }
     })
@@ -307,31 +312,24 @@ function renderShow(showObj) {
     lineUp.parentNode.insertBefore(showDiv, lineUp.nextElementSibling)
 }
 
-
-function renderNewShowFrom(eventDiv) {
-    debugger
-    
-}
-
 function listPerformers() {
-    fetch(PERFORMERS_URL)
+    return fetch(PERFORMERS_URL)
         .then(resp => resp.json())
         .then(performers => {
-            const newShowForms = document.querySelectorAll('.new-show-form')
-            // debugger
-            newShowForms.forEach((newShowForm) => {
-                const selectTag = document.createElement('select')
-                // debugger
-                performers.forEach(performer => {
-                    let performerOption = document.createElement('option')
-                    performerOption.innerText = performer.name
-                    performerOption.value = performer.id
-                    selectTag.append(performerOption)
-                })
-            // debugger
-            newShowForm.append(selectTag)
+            
+            let options = performers.map(function(performer){
+                return {label: performer.name, value: performer.id}
             })
-        })
+
+            let selectNode = document.createElement('select')
+            options.forEach(option => {
+                let optionNode = document.createElement('option')
+                optionNode.label = option.label
+                optionNode.value = option.value
+                selectNode.append(optionNode)
+            })
+            return selectNode
+    })
 }
 
 main()
