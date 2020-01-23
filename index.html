@@ -8,6 +8,7 @@
         <title>House Show /\</title>
         <script src="src/index.js"></script>
         <!-- Bootstrap -->
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
             integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
@@ -28,19 +29,17 @@
         <br />
         <div class="form-container">
             <form class="add-event-form">
-                <div id="form-title"></div>
+                <div data-event-id="form-title"></div>
                 <label>House Show:</label>
-                <div id="name-field"></div>
+                <div data-event-id="name-field"></div>
                 <label>Where?</label>
-                <div id="address-field"></div>
+                <div data-event-id="address-field"></div>
                 <label>When?</label>
-                <div id="date-time-field"></div>
+                <div data-event-id="date-time-field"></div>
                 <label>Neighborhood?</label>
-                <div id="neighborhood-select"></div>
-                <label>Who's playing?</label>
-                <div id="performer-select"></div>
+                <div data-event-id="neighborhood-select"></div>
                 <br>
-                <div id="submit"></div>
+                <div data-event-id="submit"></div>
             </form>
         </div>
         <div class = "card-container">
