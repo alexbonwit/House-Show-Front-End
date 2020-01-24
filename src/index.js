@@ -223,7 +223,7 @@ function renderEvent(eventObj) {
     eventDiv.setAttribute("data-event-id", eventObj.id)
     
     const nameDiv = document.createElement('div')
-    nameDiv.className = 'div1'
+    nameDiv.className = 'py-auto'
 
     const eventName = document.createElement('h3')
     eventName.innerText = eventObj.name
@@ -231,7 +231,7 @@ function renderEvent(eventObj) {
     nameDiv.append(eventName)
 
     const infoDiv = document.createElement('div')
-    infoDiv.className = 'div2'
+    infoDiv.className = 'py-auto'
 
     const eventHood = document.createElement('h4')
     eventHood.innerText = eventObj.neighborhood.name
@@ -245,7 +245,7 @@ function renderEvent(eventObj) {
     infoDiv.append(eventHood, eventAddress, eventTime)
 
     const interestDiv = document.createElement('div')
-    interestDiv.className = 'div5'
+    interestDiv.className = 'py-auto'
 
     const currentInterest = document.createElement('p')
     currentInterest.className = `event-interest`
@@ -262,7 +262,7 @@ function renderEvent(eventObj) {
     getShows(eventObjId)
 
     const lineUpDiv = document.createElement('div')
-    lineUpDiv.className = 'div3'
+    lineUpDiv.className = 'py-auto'
 
     const h4 = document.createElement('h4')
     h4.innerText = 'Line up:'
@@ -271,7 +271,7 @@ function renderEvent(eventObj) {
     lineUpDiv.append(h4)
 
     const newShowDiv = document.createElement('div')
-    newShowDiv.className = 'div4'
+    newShowDiv.className = 'py-auto'
 
     
     const showFormBtn = document.createElement('button')

@@ -1,3 +1,7 @@
+body {
+  background-color: #000000;
+}
+
 #show-header {
   display: flex;
   justify-content: left;
@@ -71,7 +75,7 @@
 
 input[type=text] {
   color: rgb(36, 36, 36);
-  width: 35%;
+  width: 70%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
