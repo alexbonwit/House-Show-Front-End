@@ -276,6 +276,7 @@ function renderEvent(eventObj) {
     
     const showFormBtn = document.createElement('button')
     showFormBtn.className = 'show-form'
+    showFormBtn.className = "btn btn-default"
     showFormBtn.innerText = 'Click here to add a show to this event'
     showFormBtn.addEventListener('click', function () {
         // check if the previous element is a form
@@ -286,9 +287,10 @@ function renderEvent(eventObj) {
             nameLabel.innerText = 'Show name: '
             const nameInput = document.createElement('input')
             nameInput.type = 'text'
-            nameInput.placeholder = 'Type your show name here ...'
+            // nameInput.placeholder = 'Type your show name here ...'
             const submitBtn = document.createElement('input')
             submitBtn.type = 'submit'
+            submitBtn.className = "btn btn-default"
 
             listPerformers()
                 .then((selectNode)=>{
