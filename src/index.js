@@ -223,7 +223,7 @@ function renderEvent(eventObj) {
     eventDiv.setAttribute("data-event-id", eventObj.id)
     
     const nameDiv = document.createElement('div')
-    nameDiv.className = 'py-auto'
+    nameDiv.className = 'event-title'
 
     const eventName = document.createElement('h3')
     eventName.innerText = eventObj.name
@@ -231,7 +231,7 @@ function renderEvent(eventObj) {
     nameDiv.append(eventName)
 
     const infoDiv = document.createElement('div')
-    infoDiv.className = 'py-auto'
+    infoDiv.className = 'event-info'
 
     const eventHood = document.createElement('h4')
     eventHood.innerText = eventObj.neighborhood.name
@@ -245,7 +245,7 @@ function renderEvent(eventObj) {
     infoDiv.append(eventHood, eventAddress, eventTime)
 
     const interestDiv = document.createElement('div')
-    interestDiv.className = 'py-auto'
+    interestDiv.className = 'interested-div'
 
     const currentInterest = document.createElement('p')
     currentInterest.className = `event-interest`
@@ -262,7 +262,7 @@ function renderEvent(eventObj) {
     getShows(eventObjId)
 
     const lineUpDiv = document.createElement('div')
-    lineUpDiv.className = 'py-auto'
+    lineUpDiv.className = 'lineup-info'
 
     const h4 = document.createElement('h4')
     h4.innerText = 'Line up:'
@@ -271,7 +271,7 @@ function renderEvent(eventObj) {
     lineUpDiv.append(h4)
 
     const newShowDiv = document.createElement('div')
-    newShowDiv.className = 'py-auto'
+    newShowDiv.className = 'new-show-container'
 
     
     const showFormBtn = document.createElement('button')
@@ -288,6 +288,9 @@ function renderEvent(eventObj) {
             const nameInput = document.createElement('input')
             nameInput.type = 'text'
             // nameInput.placeholder = 'Type your show name here ...'
+            const performerLabel = document.createElement('label')
+            performerLabel.innerText = 'Performer: '
+
             const submitBtn = document.createElement('input')
             submitBtn.type = 'submit'
             submitBtn.className = "btn btn-default"
@@ -298,7 +301,7 @@ function renderEvent(eventObj) {
                     form.className = 'new-show-form'
                     form.style.display = 'block'
 
-                    form.append(nameLabel, nameInput, selectNode, submitBtn)
+                    form.append(nameLabel, nameInput, performerLabel, selectNode, submitBtn)
             
                     this.parentNode.insertBefore(form, this)
 
@@ -323,7 +326,7 @@ function handleInterest(event) {
     const interest = event.target.previousElementSibling
     const newInterest = parseInt(interest.innerText) + 1
 
-    debugger
+    // debugger
 
     const interestObj = {
         method: "PATCH",

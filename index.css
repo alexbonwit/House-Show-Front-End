@@ -1,5 +1,5 @@
 body {
-  background-color: #000000;
+    background: linear-gradient(0deg, rgb(25, 26, 39) 0%, rgb(67, 85, 124) 100%);
 }
 
 #show-header {
@@ -39,7 +39,7 @@ body {
   opacity: .8;
   padding: 1rem;
   width: 30rem;
-  height: 90rem;
+  /* height: 90rem; */
   display: inline-grid;
   margin: 1rem 2rem;
   border-radius: 10px;
@@ -51,6 +51,16 @@ body {
     background: rgb(31, 31, 31);
     opacity: .8;
     padding: 1rem;
+}
+
+.add-event-form input[type=text] {
+    color: rgb(36, 36, 36);
+    width: 35%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid darkgray;
+    border-radius: 4px;
 }
 
 .footer {
@@ -83,4 +93,63 @@ input[type=text] {
   box-sizing: border-box;
   border: 2px solid darkgray;
   border-radius: 4px;
+}
+.new-show-form input[type=text] {
+    color: rgb(36, 36, 36);
+     width: 80%; 
+    /* padding: 12px 20px; */
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid darkgray;
+    border-radius: 4px; 
+}
+
+.new-show-form select {
+    color: rgb(36, 36, 36);
+     width: 80%; 
+    /* padding: 12px 20px; */
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid darkgray;
+    border-radius: 4px; 
+}
+
+.new-show-form input[type=submit] {
+    color: rgb(36, 36, 36);
+     width: 80%; 
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid darkgray;
+    border-radius: 4px; 
+}
+
+.new-show-container {
+    /* color: rgb(69, 84, 255); */
+    margin: 8px 0;
+    padding: 12px;
+}
+
+.lineup-info {
+    /* color: rgb(69, 84, 255); */
+    margin: 8px 0;
+    padding: 12px;
+}
+
+.interested-div {
+    /* color: rgb(69, 84, 255); */
+    margin: 8px 0;
+    padding: 12px;
+}
+
+.event-title {
+    /* color: rgb(69, 84, 255); */
+    margin: 8px 0;
+    padding: 12px;
+}
+
+.event-info {
+    /* color: rgb(69, 84, 255); */
+    margin: 20px 0;
+    padding: 12px;
 }
