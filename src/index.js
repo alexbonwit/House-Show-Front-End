@@ -140,7 +140,24 @@ function renderPerformers(performerObjs) {
         child = cardContainer.lastElementChild;
     }
 
+
+    const searchBox = document.createElement('form')
+    searchBox.className = 'search-box'
+
+    const searchInput = document.createElement('input')
+
+    const searchLabel = document.createElement('label')
+    searchLabel.innerText = 'Search for a Performer:    '
+
+    searchBox.append(searchLabel, searchInput)
+
+    cardContainer.append(searchBox)
+
+    // debugger
+
     performerObjs.forEach(performer => renderPerformer(performer))
+
+    searchPerformers()
 }
 
 function renderPerformer(performer) {
@@ -170,7 +187,9 @@ function renderNeighborhoods(neighborhoodData) {
         child = cardContainer.lastElementChild;
     }
 
+
     neighborhoodData.forEach(neighborhood => renderNeighborhood(neighborhood))
+    
 }
 
 function renderNeighborhood(neighborhoodObj) {
@@ -412,6 +431,26 @@ function postNewShowForm (e) {
     fetch(SHOWS_URL, reqObj)
         .then(resp => resp.json())
         .then(show => renderShow(show))
+}
+
+function searchPerformers() {
+    const searchBox = document.forms[1].querySelector('input')
+
+    searchBox.addEventListener('keyup', (e) => {
+        const searchTerm = e.target.value.toLowerCase()
+        const cardContainer = document.querySelector('div.card-container')
+        const performers = cardContainer.getElementsByTagName('h3')
+
+        Array.from(performers).forEach(performer => {
+            const name = performer.innerText
+
+            if (name.toLowerCase().indexOf(searchTerm) != -1) {
+                performer.style.display = 'block'
+            } else {
+                performer.style.display = 'none'
+            }
+        })
+    })
 }
 
 main()
